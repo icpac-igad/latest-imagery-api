@@ -75,4 +75,37 @@ const parseDescribeDomainsResponse = function (xml) {
   }
 };
 
-module.exports = { parseDescribeDomainsResponse };
+const parseGetDomainValuesResponse = function (xml) {
+  const xmlNamespaces = {
+    ows: "http://www.opengis.net/ows/1.1",
+    wmts_md:
+      "http://demo.geo-solutions.it/share/wmts-multidim/wmts_multi_dimensional.xsd",
+    wmts: "http://www.opengis.net/wmts/1.0",
+  };
+
+  try {
+    const doc = createDocument(xml);
+
+    const domainValuesEl = doc.getElementsByTagNameNS(
+      xmlNamespaces.wmts_md,
+      "DomainValues"
+    )[0];
+
+    const domainEl = domainValuesEl.getElementsByTagNameNS(
+      xmlNamespaces.wmts_md,
+      "Domain"
+    )[0];
+
+    const data = {};
+
+    let values = domainEl.childNodes[0].nodeValue;
+    data.values = values.split(",");
+
+    return data;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
+module.exports = { parseDescribeDomainsResponse, parseGetDomainValuesResponse };

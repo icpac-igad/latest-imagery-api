@@ -12,9 +12,20 @@ class MetSatRouter {
 
     ctx.body = await MetsatService.wmtsDescribeDomains(ctx.params.layer);
   }
+  static async wmtsGetTimeDomanValues(ctx) {
+    ctx.assert(ctx.params.layer, 400, "layer required");
+
+    let fromValue = ctx.query.fromValue;
+
+    ctx.body = await MetsatService.wmtsGetTimeDomainValues(
+      ctx.params.layer,
+      fromValue
+    );
+  }
 }
 
 router.get("/describe/:layer", MetSatRouter.wmtsDescribeDomains);
+router.get("/time/:layer", MetSatRouter.wmtsGetTimeDomanValues);
 router.get(
   "/wms",
   proxy("/", {
