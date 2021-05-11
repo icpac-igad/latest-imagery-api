@@ -58,9 +58,7 @@ async function init() {
     // load routes
     loader.loadRoutes(app);
 
-    // get port of environment, if not exist obtain of the config.
-    // In production environment, the port must be declared in environment variable
-    const port = process.env.PORT || config.get("service.port");
+    const port = 3000
 
     const server = app.listen(port, () => {
       logger.info("Server started in ", process.env.PORT);
