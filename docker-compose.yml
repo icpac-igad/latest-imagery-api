@@ -4,5 +4,6 @@ services:
   live-imagery:
     image: ${IMAGE_URI}
     container_name: live-imagery
+    restart: always
     ports: 
       - ${PORT}:3000
